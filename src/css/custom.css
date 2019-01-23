@@ -4,3 +4,7 @@
   grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   grid-gap: 32px;
 }
+
+a {
+  @apply text-grey-darkest;
+}
