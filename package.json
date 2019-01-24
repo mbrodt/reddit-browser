@@ -17,6 +17,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.8.0-alpha.0",
     "react-dom": "^16.8.0-alpha.0",
+    "react-epic-spinners": "^0.2.1",
     "react-helmet": "^5.2.0",
     "snoowrap": "^1.15.2",
     "tailwindcss": "^0.7.3",

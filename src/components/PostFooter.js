@@ -10,7 +10,12 @@ const PostFooter = ({ post }) => (
     >
       {post.subreddit}
     </a>
-    <div className="flex items-center">
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      href={`https://reddit.com/${post.permalink}`}
+      className="flex items-center no-underline"
+    >
       <svg
         className="fill-current text-grey-40 w-6 mr-2"
         viewBox="0 0 20 20"
@@ -27,7 +32,7 @@ const PostFooter = ({ post }) => (
         </g>
       </svg>
       <p className="font-bold text-white">{post.comments_num}</p>
-    </div>
+    </a>
     <div className="flex items-center">
       <svg
         className="fill-current text-grey-40 w-6 mr-2"

@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import snoowrap from 'snoowrap'
+import { SwappingSquaresSpinner } from 'react-epic-spinners'
 
 import Subreddits from './Subreddits'
 import FetchButton from './FetchButton'
 import PostList from './PostList'
 
+import tw from '../../tailwind'
+
 const App = () => {
   const [posts, setPosts] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [activeSubreddits, setActiveSubreddits] = useState([])
 
   const api = new snoowrap({
@@ -25,11 +29,13 @@ const App = () => {
 
   function getPosts() {
     console.log('active subr', activeSubreddits)
+    setIsLoading(true)
     let fetched = activeSubreddits.map(subr => {
       return api
         .getSubreddit(subr.name)
         .getHot()
-        .filter(post => post.score > 100)
+        .filter(post => post.score > 50)
+        .filter(post => !post.stickied)
         .map(post => {
           console.log('post', post)
           const body = post.selftext_html ? post.selftext_html : ''
@@ -43,21 +49,19 @@ const App = () => {
             body: body,
             excerpt: excerpt,
             url: post.url,
+            permalink: post.permalink,
             score: post.score,
             thumbnail: post.thumbnail,
             comments_num: post.num_comments,
           }
         })
-      // .then(fetchedPosts => {
-      //   console.log('POSTS', fetchedPosts)
-      //   setPosts(fetchedPosts)
-      // })
     })
     Promise.all(fetched).then(data => {
       const sorted = []
         .concat(...data)
         .sort((firstEl, secondEl) => secondEl.score - firstEl.score)
       setPosts(sorted)
+      setIsLoading(false)
     })
   }
   return (
@@ -68,7 +72,16 @@ const App = () => {
           <FetchButton getPosts={getPosts} />
         </div>
       </div>
-      <PostList posts={posts} />
+
+      {isLoading && (
+        // <div className="mx-auto">
+        <SwappingSquaresSpinner
+          className="mx-auto mb-8"
+          color={tw.colors['pink-dark']}
+        />
+        // </div>
+      )}
+      {posts.length > 0 && <PostList posts={posts} />}
     </>
   )
 }

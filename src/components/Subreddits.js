@@ -8,12 +8,9 @@ const Subreddits = ({ sendSubredditsToParent }) => {
     { name: 'webdev', isActive: true },
     { name: 'cscareerquestions', isActive: true },
     { name: 'web_design', isActive: true },
-    { name: 'hey', isActive: false },
-    { name: 'verylongreddithaha', isActive: false },
-    { name: 'asasasmasas', isActive: false },
-    { name: 'ok', isActive: false },
-    { name: 'asasasmasasasasaaasasas', isActive: false },
-    { name: 'qqasa', isActive: false },
+    { name: 'reactjs', isActive: true },
+    { name: 'javascript', isActive: true },
+    { name: 'learnprogramming', isActive: true },
   ])
 
   useEffect(
