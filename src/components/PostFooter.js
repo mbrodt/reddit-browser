@@ -51,6 +51,9 @@ const PostFooter = ({ post }) => (
       </svg>
       <p className="font-bold text-white">{post.score}</p>
     </div>
+    <p className="text-white flex items-center">
+      {getHoursFromNow(post.created) + ' hours ago'}
+    </p>
     <a
       target="_blank"
       rel="noopener noreferrer"
@@ -67,5 +70,11 @@ const PostFooter = ({ post }) => (
     </a>
   </div>
 )
+
+const getHoursFromNow = timestamp => {
+  let created = new Date(timestamp)
+  let now = new Date()
+  return Math.floor((now - created) / 1000 / 60 / 60) // hours passed since the post creation
+}
 
 export default PostFooter

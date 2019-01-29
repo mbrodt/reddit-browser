@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 const AddSubreddit = ({ addSubreddit }) => {
   const [input, setInput] = useState('')
+
   return (
     <div className="flex mb-2 ">
       <div className="bg-gradient-br-pink-pink-dark text-white font-semibold flex items-center px-4">
@@ -10,6 +11,13 @@ const AddSubreddit = ({ addSubreddit }) => {
       <input
         className="py-4 bg-grey-40 text-white p-4 flex-1"
         onChange={e => setInput(e.target.value)}
+        onKeyDown={e => {
+          console.log('KEYDOWN')
+          if (e.keyCode === 13) {
+            addSubreddit(input)
+            setInput('')
+          }
+        }}
         value={input}
         type="text"
         placeholder="Type any subreddit in here to add it"

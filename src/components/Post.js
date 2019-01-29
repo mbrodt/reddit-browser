@@ -10,7 +10,7 @@ const Post = ({ post }) => {
         <p className="font-bold text-xl mb-4 text-blue-lighter">{post.title}</p>
         <div>
           <p
-            className="text-teal-lightest overflow-x-hidden"
+            className="text-teal-lightest overflow-x-hidden leading-normal"
             onClick={e => {
               e.persist()
               isOpen
