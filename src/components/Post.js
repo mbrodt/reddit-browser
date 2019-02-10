@@ -17,9 +17,6 @@ const Post = ({ post }) => {
                 ? (e.currentTarget.innerHTML = post.excerpt)
                 : (e.currentTarget.innerHTML = post.body)
               isOpen = !isOpen
-              // console.log(e.currentTarget)
-              // console.log(e)
-              // e.currentTarget.innerHTML = post.body
             }}
             dangerouslySetInnerHTML={{
               __html: post.excerpt,

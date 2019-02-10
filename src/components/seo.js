@@ -19,7 +19,7 @@ function SEO({ description, lang, meta, keywords, title }) {
               class: 'bg-purple-darkest',
             }}
             title={title}
-            titleTemplate={`%s | ${data.site.siteMetadata.title}`}
+            titleTemplate={`${data.site.siteMetadata.title}`}
             meta={[
               {
                 name: `description`,

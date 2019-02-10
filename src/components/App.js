@@ -22,14 +22,15 @@ const App = () => {
   })
 
   function getSubredditsFromChild(subreddits) {
-    console.log('im the parent')
     let active = subreddits.filter(ele => ele.isActive)
-    console.log('active', active)
     setActiveSubreddits(active)
   }
 
   function getPosts() {
-    console.log('active subr', activeSubreddits)
+    if (!activeSubreddits.length) {
+      setIsError(true)
+      return
+    }
     setIsError(false)
     setIsLoading(true)
     let fetched = activeSubreddits.map(subr => {
@@ -60,7 +61,10 @@ const App = () => {
       <div className="bg-gradient-l-purple p-16 mx-4 mt-4 mb-8 shadow-header">
         <div className="w-1/2 mx-auto">
           <Subreddits sendSubredditsToParent={getSubredditsFromChild} />
-          <FetchButton getPosts={getPosts} />
+          <FetchButton
+            getPosts={getPosts}
+            disabled={isLoading || !activeSubreddits.length}
+          />
         </div>
       </div>
 
@@ -79,7 +83,6 @@ const App = () => {
 }
 
 const createPost = post => {
-  console.log('post', post)
   const body = post.selftext_html ? post.selftext_html : ''
   const excerpt = body
     .split(/\s+/)

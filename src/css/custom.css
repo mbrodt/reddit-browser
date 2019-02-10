@@ -8,3 +8,12 @@
 a {
   @apply text-grey-darkest;
 }
+
+.subreddit:hover svg {
+  display: block;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

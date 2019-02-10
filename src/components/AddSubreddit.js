@@ -12,7 +12,6 @@ const AddSubreddit = ({ addSubreddit }) => {
         className="py-4 bg-grey-40 text-white p-4 flex-1"
         onChange={e => setInput(e.target.value)}
         onKeyDown={e => {
-          console.log('KEYDOWN')
           if (e.keyCode === 13) {
             addSubreddit(input)
             setInput('')

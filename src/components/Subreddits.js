@@ -39,14 +39,12 @@ const Subreddits = ({ sendSubredditsToParent }) => {
 
   useEffect(
     () => {
-      console.log('EFFECT')
       sendSubredditsToParent(subreddits)
     },
     [subreddits]
   )
 
   function addSubreddit(name) {
-    console.log('adding', name)
     let exists = false
     subreddits.forEach(subreddit => {
       if (subreddit.name === name) {
@@ -61,6 +59,12 @@ const Subreddits = ({ sendSubredditsToParent }) => {
       }
       setSubreddits([subreddit, ...subreddits])
     }
+  }
+
+  function removeSubreddit(name) {
+    let index = subreddits.indexOf(name)
+    subreddits.splice(index, 1)
+    setSubreddits([...subreddits])
   }
 
   function toggleActive(subreddit) {
@@ -84,6 +88,7 @@ const Subreddits = ({ sendSubredditsToParent }) => {
         {subreddits.map(subreddit => (
           <Subreddit
             subreddit={subreddit}
+            removeSubreddit={removeSubreddit}
             toggleActive={toggleActive}
             key={subreddit.name}
           />
