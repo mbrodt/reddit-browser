@@ -3,15 +3,39 @@ import React, { useState, useEffect } from 'react'
 import AddSubreddit from './AddSubreddit'
 import Subreddit from './Subreddit'
 
+const useLocalStorage = (key, initialValue) => {
+  const [item, setInnerValue] = useState(() => {
+    try {
+      return window.localStorage.getItem(key)
+        ? JSON.parse(window.localStorage.getItem(key))
+        : initialValue
+    } catch (err) {
+      return initialValue
+    }
+  })
+
+  const setValue = value => {
+    try {
+      setInnerValue(value)
+      window.localStorage.setItem(key, JSON.stringify(value))
+    } catch (err) {
+      console.log('error', err)
+    }
+  }
+
+  return [item, setValue]
+}
+
 const Subreddits = ({ sendSubredditsToParent }) => {
-  const [subreddits, setSubreddits] = useState([
+  const initVal = [
     { name: 'webdev', isActive: true },
     { name: 'cscareerquestions', isActive: true },
-    { name: 'web_design', isActive: true },
-    { name: 'reactjs', isActive: true },
-    { name: 'javascript', isActive: true },
-    { name: 'learnprogramming', isActive: true },
-  ])
+    // { name: 'web_design', isActive: true },
+    // { name: 'reactjs', isActive: true },
+    // { name: 'javascript', isActive: true },
+    // { name: 'learnprogramming', isActive: true },
+  ]
+  const [subreddits, setSubreddits] = useLocalStorage('subreddits', initVal)
 
   useEffect(
     () => {
