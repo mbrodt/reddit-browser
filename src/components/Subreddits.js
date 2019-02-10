@@ -64,7 +64,6 @@ const Subreddits = ({ sendSubredditsToParent }) => {
   function removeSubreddit(name) {
     let index = subreddits.indexOf(name)
     subreddits.splice(index, 1)
-    setSubreddits([...subreddits])
   }
 
   function toggleActive(subreddit) {
