@@ -28,8 +28,8 @@ const useLocalStorage = (key, initialValue) => {
 
 const Subreddits = ({ sendSubredditsToParent }) => {
   const initVal = [
-    { name: 'webdev', isActive: true },
-    { name: 'cscareerquestions', isActive: true },
+    // { name: 'webdev', isActive: true },
+    // { name: 'cscareerquestions', isActive: true },
     // { name: 'web_design', isActive: true },
     // { name: 'reactjs', isActive: true },
     // { name: 'javascript', isActive: true },
