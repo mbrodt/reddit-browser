@@ -84,16 +84,12 @@ const App = () => {
 
 const createPost = post => {
   const body = post.selftext_html ? post.selftext_html : ''
-  const excerpt = body
-    .split(/\s+/)
-    .slice(0, 50)
-    .join(' ')
+
   return {
     subreddit: post.subreddit_name_prefixed,
     title: post.title,
     created: post.created_utc * 1000, //multiplied by 1000 to get seconds rather than ms
     body: body,
-    excerpt: excerpt,
     url: post.url,
     permalink: post.permalink,
     score: post.score,
