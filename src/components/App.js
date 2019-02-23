@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import Select from 'react-select'
 import snoowrap from 'snoowrap'
 import { SwappingSquaresSpinner } from 'react-epic-spinners'
 
@@ -10,6 +11,7 @@ import tw from '../../tailwind'
 
 const App = () => {
   const [posts, setPosts] = useState([])
+  const [upvoteCount, setUpvoteCount] = useState()
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
   const [activeSubreddits, setActiveSubreddits] = useState([])
@@ -26,18 +28,24 @@ const App = () => {
     setActiveSubreddits(active)
   }
 
+  function getUpvotesFromChild(valueObj) {
+    console.log('value from parent', valueObj)
+    setUpvoteCount(valueObj)
+  }
+
   function getPosts() {
-    if (!activeSubreddits.length) {
-      setIsError(true)
-      return
-    }
+    // probably not needed since button is disabled with no active subreddits
+    // if (!activeSubreddits.length) {
+    //   setIsError(true)
+    //   return
+    // }
     setIsError(false)
     setIsLoading(true)
     let fetched = activeSubreddits.map(subr => {
       return api
         .getSubreddit(subr.name)
         .getHot()
-        .filter(post => post.score > 50)
+        .filter(post => post.score > upvoteCount.value)
         .filter(post => !post.stickied)
         .map(post => {
           return createPost(post)
@@ -61,6 +69,7 @@ const App = () => {
       <div className="bg-gradient-l-purple p-16 mx-4 mt-4 mb-8 shadow-header">
         <div className="w-1/2 mx-auto">
           <Subreddits sendSubredditsToParent={getSubredditsFromChild} />
+          <UpvoteSelect sendUpvotesToParent={getUpvotesFromChild} />
           <FetchButton
             getPosts={getPosts}
             disabled={isLoading || !activeSubreddits.length}
@@ -79,6 +88,30 @@ const App = () => {
       {isError && <Error />}
       {posts.length > 0 && <PostList posts={posts} />}
     </>
+  )
+}
+
+const UpvoteSelect = ({ sendUpvotesToParent }) => {
+  const options = [
+    { value: 25, label: '25 Upvotes' },
+    { value: 50, label: '50 Upvotes' },
+    { value: 100, label: '100 Upvotes' },
+  ]
+
+  const [currentUpvotes, setCurrentUpvotes] = useState(options[1])
+  useEffect(
+    () => {
+      console.log('running useEffect')
+      sendUpvotesToParent(currentUpvotes)
+    },
+    [currentUpvotes]
+  )
+  return (
+    <Select
+      onChange={value => setCurrentUpvotes(value)}
+      value={currentUpvotes}
+      options={options}
+    />
   )
 }
 
