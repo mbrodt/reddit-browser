@@ -29,7 +29,6 @@ const App = () => {
   }
 
   function getUpvotesFromChild(valueObj) {
-    console.log('value from parent', valueObj)
     setUpvoteCount(valueObj)
   }
 
@@ -69,11 +68,13 @@ const App = () => {
       <div className="bg-gradient-l-purple p-16 mx-4 mt-4 mb-8 shadow-header">
         <div className="w-1/2 mx-auto">
           <Subreddits sendSubredditsToParent={getSubredditsFromChild} />
-          <UpvoteSelect sendUpvotesToParent={getUpvotesFromChild} />
-          <FetchButton
-            getPosts={getPosts}
-            disabled={isLoading || !activeSubreddits.length}
-          />
+          <div className="mt-12">
+            <UpvoteSelect sendUpvotesToParent={getUpvotesFromChild} />
+            <FetchButton
+              getPosts={getPosts}
+              disabled={isLoading || !activeSubreddits.length}
+            />
+          </div>
         </div>
       </div>
 
@@ -101,17 +102,22 @@ const UpvoteSelect = ({ sendUpvotesToParent }) => {
   const [currentUpvotes, setCurrentUpvotes] = useState(options[1])
   useEffect(
     () => {
-      console.log('running useEffect')
       sendUpvotesToParent(currentUpvotes)
     },
     [currentUpvotes]
   )
   return (
-    <Select
-      onChange={value => setCurrentUpvotes(value)}
-      value={currentUpvotes}
-      options={options}
-    />
+    <div className="w-1/3 mx-auto mb-4">
+      <p className="text-center text-blue-lighter text-xs mb-2">
+        Only show posts above this upvote count
+      </p>
+      <Select
+        className=""
+        onChange={value => setCurrentUpvotes(value)}
+        value={currentUpvotes}
+        options={options}
+      />
+    </div>
   )
 }
 
